@@ -10,6 +10,20 @@ class _AddPerguntaState extends State<AddPergunta> {
   TextEditingController perguntaController = TextEditingController();
   TextEditingController respostaController = TextEditingController();
 
+  //Snackbar
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  _showSnackBar(String text) {
+    final snackBar = SnackBar(
+      elevation: 10,
+      content: Text(text, style: TextStyle(fontSize: 18)),
+      duration: Duration(seconds: 5),
+      backgroundColor: Colors.green,
+    );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+  }
+
+  ///Snackbar
+
   List<Doc> listdoc = [];
 
   FaqManipulation faqManipulation = FaqManipulation();
@@ -21,28 +35,6 @@ class _AddPerguntaState extends State<AddPergunta> {
     }
   }
 
-  bool botaoadd = false;
-
-  void _modalAvisos(context, String text) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return Container(
-            color: Colors.green,
-            child: new Wrap(
-              children: <Widget>[
-                new ListTile(
-                  leading: new Icon(
-                    Icons.check,
-                  ),
-                  title: Text(text),
-                ),
-              ],
-            ),
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     //Mesnsages de confirmações
@@ -51,6 +43,7 @@ class _AddPerguntaState extends State<AddPergunta> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      key: _scaffoldKey,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -64,7 +57,7 @@ class _AddPerguntaState extends State<AddPergunta> {
                     Icons.restore_from_trash,
                   ),
                   onPressed: () {
-                    _modalAvisos(context, "Removido com sucesso!");
+                    _showSnackBar("Removido com sucesso!");
                     //  Navigator.push(context,
                     //  MaterialPageRoute(builder: (context) => Faq()));
                   }, //passar função apagar
@@ -95,24 +88,14 @@ class _AddPerguntaState extends State<AddPergunta> {
               ),
             ),
             RaisedButton(
-              color: Colors.orangeAccent,
-              onPressed: botaoadd
-                  ? null
-                  : () async {
-                      setState(() {
-                        botaoadd = true;
-                      });
-                      await faqManipulation.addQuestion(
-                        query: perguntaController.text,
-                        answer: respostaController.text,
-                      );
-                      _modalAvisos(context, "Adicionada com sucesso!");
+              onPressed: () async {
+                await faqManipulation.addQuestion(
+                  query: perguntaController.text,
+                  answer: respostaController.text,
+                );
 
-                      Future.delayed(Duration(seconds: 3), () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      });
-                    },
+                _showSnackBar("Adicionada com sucesso!");
+              },
               child: Text("adicionar"),
             )
           ],
