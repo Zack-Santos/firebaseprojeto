@@ -93,6 +93,7 @@ class _AddPerguntaState extends State<AddPergunta> {
               ),
             ),
             RaisedButton(
+              color: Colors.orangeAccent,
               onPressed: botaoadd
                   ? null
                   : () async {
@@ -106,6 +107,7 @@ class _AddPerguntaState extends State<AddPergunta> {
                       _modalAvisos(context, "Adicionada com sucesso!");
 
                       await Future.delayed(Duration(seconds: 3));
+
                       Navigator.pop(context);
                       Navigator.pop(context);
                       Navigator.pop(context);
