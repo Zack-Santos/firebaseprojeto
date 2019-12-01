@@ -1,19 +1,10 @@
 import 'package:firebaseflutter/faqmanipulation.dart';
 import 'package:flutter/material.dart';
 
-class FaqEdit extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "ListView SearchView",
-      home: new Faq(),
-      // theme: ThemeData(primaryColor: Colors.orange),
-    );
-  }
-}
-
 //Represents the Homepage widget
 class Faq extends StatefulWidget {
+  List<String> _listquery;
+  Faq(this._listquery);
   //`createState()` will create the mutable state for this widget at
   //a given location in the tree.
   @override
@@ -55,26 +46,10 @@ class _FaqState extends State<Faq> {
   @override
   void initState() {
     super.initState();
-    getDocs();
 
-    // _nebulae = new List<String>();
-    // _nebulae = [
-    //   "renan",
-    //   "Boomerang",
-    //   "Cat's Eye",
-    //   "Pelican",
-    //   "Ghost Head",
-    //   "Witch Head",
-    //   "Snake",
-    //   "Ant",
-    //   "Bernad 68",
-    //   "Flame",
-    //   "Eagle",
-    //   "Horse Head",
-    //   "Elephant's Trunk",
-    //   "Butterfly"
-    // ];
-    // _nebulae.sort();
+    _nebulae = new List<String>();
+    _nebulae = widget._listquery;
+    _nebulae.sort();
   }
 
   _FaqState() {
