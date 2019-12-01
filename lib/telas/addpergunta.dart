@@ -21,31 +21,33 @@ class _AddPerguntaState extends State<AddPergunta> {
     }
   }
 
+  bool botaoadd = false;
+
+  void _modalAvisos(context, String text) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            color: Colors.green,
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                  leading: new Icon(
+                    Icons.check,
+                  ),
+                  title: Text(text),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     //Mesnsages de confirmações
-    void _modalAvisos(context, String text) {
-      showModalBottomSheet(
-          context: context,
-          builder: (BuildContext bc) {
-            return Container(
-              color: Colors.green,
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                    leading: new Icon(
-                      Icons.check,
-                    ),
-                    title: Text(text),
-                  ),
-                ],
-              ),
-            );
-          });
-    }
 
     pegarDocs();
-    bool botaoadd = false;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -98,7 +100,7 @@ class _AddPerguntaState extends State<AddPergunta> {
                   ? null
                   : () async {
                       setState(() {
-                        botaoadd = !botaoadd;
+                        botaoadd = true;
                       });
                       await faqManipulation.addQuestion(
                         query: perguntaController.text,
@@ -106,11 +108,10 @@ class _AddPerguntaState extends State<AddPergunta> {
                       );
                       _modalAvisos(context, "Adicionada com sucesso!");
 
-                      await Future.delayed(Duration(seconds: 3));
-
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      Future.delayed(Duration(seconds: 3), () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      });
                     },
               child: Text("adicionar"),
             )
