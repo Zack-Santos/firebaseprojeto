@@ -73,7 +73,7 @@ class _FaqState extends State<Faq> {
     //   "Elephant's Trunk",
     //   "Butterfly"
     // ];
-    // _nebulae.sort();
+     _nebulae.sort();
   }
 
   _FaqState() {
