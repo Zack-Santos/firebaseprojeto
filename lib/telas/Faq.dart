@@ -1,6 +1,8 @@
 import 'package:firebaseflutter/faqmanipulation.dart';
 import 'package:flutter/material.dart';
 
+import 'addpergunta.dart';
+
 //Represents the Homepage widget
 class Faq extends StatefulWidget {
   List<String> _listquery;
@@ -120,8 +122,8 @@ class _FaqState extends State<Faq> {
               elevation: 5,
               child: IconButton(
                 onPressed: () {
-                  //   Navigator.push(context,
-                  //    MaterialPageRoute(builder: (context) => AddQuestion()));
+                    Navigator.push(context,
+                     MaterialPageRoute(builder: (context) => AddPergunta()));
                 },
                 icon: Icon(Icons.add),
               ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebaseflutter/faqmanipulation.dart';
 import 'package:flutter/material.dart';
 
@@ -23,14 +24,60 @@ class _AddPerguntaState extends State<AddPergunta> {
 
   @override
   Widget build(BuildContext context) {
+    //Mesnsages de confirmações
+    void _modalAvisos(context, String text) {
+      showModalBottomSheet(
+          context: context,
+          builder: (BuildContext bc) {
+            return Container(
+              color: Colors.green,
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                    leading: new Icon(
+                      Icons.check,
+                    ),
+                    title: Text(text),
+                  ),
+                ],
+              ),
+            );
+          });
+    }
+
     pegarDocs();
+
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
+            AppBar(
+              actions: <Widget>[
+                IconButton(
+                  color: Colors.black,
+                  iconSize: 40,
+                  icon: Icon(
+                    Icons.restore_from_trash,
+                  ),
+                  onPressed: () {
+                  
+                  }, //passar função apagar
+                )
+              ],
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back_ios),
+                iconSize: 20.0,
+                color: Colors.black,
+                // onPressed: eventFunc,
+              ),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+            ),
             TextField(
               controller: perguntaController,
               decoration: InputDecoration(
@@ -49,6 +96,7 @@ class _AddPerguntaState extends State<AddPergunta> {
                   query: perguntaController.text,
                   answer: respostaController.text,
                 );
+                _modalAvisos(context, "Pergunta adicionada com sucesso!");
               },
               child: Text("adicionar"),
             )
