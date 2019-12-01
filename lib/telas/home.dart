@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebaseflutter/telas/Faq.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -26,6 +27,8 @@ class _HomeState extends State<Home> {
         child: RaisedButton(
           onPressed: () async {
             await getQuestions();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Faq(_list)));
           },
           child: Text("click"),
         ),

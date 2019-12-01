@@ -122,8 +122,8 @@ class _FaqState extends State<Faq> {
               elevation: 5,
               child: IconButton(
                 onPressed: () {
-                    Navigator.push(context,
-                     MaterialPageRoute(builder: (context) => AddPergunta()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddPergunta()));
                 },
                 icon: Icon(Icons.add),
               ),
