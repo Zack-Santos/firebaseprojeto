@@ -1,3 +1,4 @@
+import 'package:firebaseflutter/faqmanipulation.dart';
 import 'package:flutter/material.dart';
 
 class FaqEdit extends StatelessWidget {
@@ -6,13 +7,14 @@ class FaqEdit extends StatelessWidget {
     return MaterialApp(
       title: "ListView SearchView",
       home: new Faq(),
-     // theme: ThemeData(primaryColor: Colors.orange),
+      // theme: ThemeData(primaryColor: Colors.orange),
     );
   }
 }
+
 //Represents the Homepage widget
 class Faq extends StatefulWidget {
-  //`createState()` will create the mutable state for this widget at 
+  //`createState()` will create the mutable state for this widget at
   //a given location in the tree.
   @override
   _FaqState createState() => _FaqState();
@@ -21,40 +23,57 @@ class Faq extends StatefulWidget {
 //Our Home state, the logic and internal state for a StatefulWidget.
 class _FaqState extends State<Faq> {
   //A controller for an editable text field.
-  //Whenever the user modifies a text field with an associated 
-  //TextEditingController, the text field updates value and the 
+  //Whenever the user modifies a text field with an associated
+  //TextEditingController, the text field updates value and the
   //controller notifies its listeners.
   var _searchview = new TextEditingController();
 
   bool _firstSearch = true;
   String _query = "";
 
-  List<String> _nebulae; //pasar a lista aki
+  FaqManipulation _faqManipulation = FaqManipulation();
+
   List<String> _filterList;
+  List<String> _nebulae = [];
+  List<Doc> _listdocs = [];
+
+  //pega as perguntas e armazena em uma lista de Strings.
+  getQuestions() {
+    for (var item in _listdocs) {
+      _nebulae.add(item.pergunta);
+      print(item.pergunta);
+    }
+  }
+
+  //pega todos os documentos e armazena em uma lista de documentos.
+  getDocs() async {
+    _listdocs = await _faqManipulation.getAllDocs();
+    getQuestions();
+  }
 
   @override
   void initState() {
     super.initState();
-    _nebulae = new List<String>();
-    _nebulae = [
-      "renan",
-      "Boomerang",
-      "Cat's Eye",
-      "Pelican",
-      "Ghost Head",
-      "Witch Head",
-      "Snake",
-      "Ant",
-      "Bernad 68",
-      "Flame",
-      "Eagle",
-      "Horse Head",
-      "Elephant's Trunk",
-      "Butterfly",
-      "renan",
-      "renan"
-    ];
-    _nebulae.sort();
+    getDocs();
+
+    // _nebulae = new List<String>();
+    // _nebulae = [
+    //   "renan",
+    //   "Boomerang",
+    //   "Cat's Eye",
+    //   "Pelican",
+    //   "Ghost Head",
+    //   "Witch Head",
+    //   "Snake",
+    //   "Ant",
+    //   "Bernad 68",
+    //   "Flame",
+    //   "Eagle",
+    //   "Horse Head",
+    //   "Elephant's Trunk",
+    //   "Butterfly"
+    // ];
+    // _nebulae.sort();
   }
 
   _FaqState() {
@@ -79,20 +98,20 @@ class _FaqState extends State<Faq> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
       body: new Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
         child: new Column(
           children: <Widget>[
-           _createSearchView(),
+            _createSearchView(),
             _firstSearch ? _createListView() : _performSearch()
           ],
         ),
       ),
     );
   }
- //Create a SearchView
-   Widget _createSearchView({double top = 40}) => Row(
+
+  //Create a SearchView
+  Widget _createSearchView({double top = 40}) => Row(
         children: <Widget>[
           Expanded(
             child: Container(
@@ -106,7 +125,7 @@ class _FaqState extends State<Faq> {
                   cursorColor: Colors.green,
                   decoration: InputDecoration(
                     hintText: "Pesquisar pergunta",
-                   // hintStyle: MyTextStyles.textInformation,
+                    // hintStyle: MyTextStyles.textInformation,
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 32, vertical: 14),
                     suffixIcon: Material(
@@ -125,7 +144,7 @@ class _FaqState extends State<Faq> {
               elevation: 5,
               child: IconButton(
                 onPressed: () {
-               //   Navigator.push(context,
+                  //   Navigator.push(context,
                   //    MaterialPageRoute(builder: (context) => AddQuestion()));
                 },
                 icon: Icon(Icons.add),
@@ -148,9 +167,6 @@ class _FaqState extends State<Faq> {
   //   );
   // }
 
-
-
-  
   //Create a ListView widget
   Widget _createListView() {
     return new Flexible(
@@ -168,6 +184,7 @@ class _FaqState extends State<Faq> {
           }),
     );
   }
+
   //Perform actual search
   Widget _performSearch() {
     _filterList = new List<String>();
@@ -180,7 +197,8 @@ class _FaqState extends State<Faq> {
     }
     return _createFilteredListView();
   }
-  //Create the Filtered ListView 
+
+  //Create the Filtered ListView
   Widget _createFilteredListView() {
     return new Flexible(
       child: new ListView.builder(
