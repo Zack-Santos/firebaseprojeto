@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
         child: RaisedButton(
           onPressed: () async {
             await getQuestions();
+
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Faq(_list)));
           },

@@ -45,6 +45,7 @@ class _AddPerguntaState extends State<AddPergunta> {
     }
 
     pegarDocs();
+    bool botaoadd = false;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -92,13 +93,23 @@ class _AddPerguntaState extends State<AddPergunta> {
               ),
             ),
             RaisedButton(
-              onPressed: () async {
-                await faqManipulation.addQuestion(
-                  query: perguntaController.text,
-                  answer: respostaController.text,
-                );
-                _modalAvisos(context, "Adicionada com sucesso!");
-              },
+              onPressed: botaoadd
+                  ? null
+                  : () async {
+                      setState(() {
+                        botaoadd = !botaoadd;
+                      });
+                      await faqManipulation.addQuestion(
+                        query: perguntaController.text,
+                        answer: respostaController.text,
+                      );
+                      _modalAvisos(context, "Adicionada com sucesso!");
+
+                      await Future.delayed(Duration(seconds: 3));
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    },
               child: Text("adicionar"),
             )
           ],
