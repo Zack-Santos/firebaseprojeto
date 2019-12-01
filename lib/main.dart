@@ -5,6 +5,6 @@ import 'package:flutter/material.dart';
 
 main() {
   runApp(MaterialApp(
-    home: Faq(),
+    home: FaqEdit(),
   ));
 }

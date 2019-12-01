@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
-
+class FaqEdit extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "ListView SearchView",
+      home: new Faq(),
+      theme: ThemeData(primaryColor: Colors.orange),
+    );
+  }
+}
 //Represents the Homepage widget
 class Faq extends StatefulWidget {
   //`createState()` will create the mutable state for this widget at 
@@ -46,7 +55,7 @@ class _FaqState extends State<Faq> {
     _nebulae.sort();
   }
 
-  _HomeState() {
+  _FaqState() {
     //Register a closure to be called when the object changes.
     _searchview.addListener(() {
       if (_searchview.text.isEmpty) {
