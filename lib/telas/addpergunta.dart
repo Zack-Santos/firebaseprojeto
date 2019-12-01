@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebaseflutter/faqmanipulation.dart';
-import 'package:firebaseflutter/telas/Faq.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AddPergunta extends StatefulWidget {
@@ -64,10 +61,9 @@ class _AddPerguntaState extends State<AddPergunta> {
                     Icons.restore_from_trash,
                   ),
                   onPressed: () {
-                    _modalAvisos(context,"Removido com sucesso!");
+                    _modalAvisos(context, "Removido com sucesso!");
                     //  Navigator.push(context,
                     //  MaterialPageRoute(builder: (context) => Faq()));
-                  
                   }, //passar função apagar
                 )
               ],
