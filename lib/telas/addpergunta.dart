@@ -24,22 +24,11 @@ class _AddPerguntaState extends State<AddPergunta> {
 
   ///Snackbar
 
-  List<Doc> listdoc = [];
-
   FaqManipulation faqManipulation = FaqManipulation();
-
-  pegarDocs() async {
-    listdoc = await faqManipulation.getAllDocs();
-    for (var item in listdoc) {
-      print(item.id);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     //Mesnsages de confirmações
-
-    pegarDocs();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -88,6 +77,7 @@ class _AddPerguntaState extends State<AddPergunta> {
               ),
             ),
             RaisedButton(
+              color: Colors.orange,
               onPressed: () async {
                 await faqManipulation.addQuestion(
                   query: perguntaController.text,
@@ -95,6 +85,11 @@ class _AddPerguntaState extends State<AddPergunta> {
                 );
 
                 _showSnackBar("Adicionada com sucesso!");
+
+                Future.delayed(Duration(seconds: 2), () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                });
               },
               child: Text("adicionar"),
             )

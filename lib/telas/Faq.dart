@@ -5,8 +5,8 @@ import 'addpergunta.dart';
 
 //Represents the Homepage widget
 class Faq extends StatefulWidget {
-  List<String> _listquery;
-  Faq(this._listquery);
+  List<Doc> _listdocs;
+  Faq(this._listdocs);
   //`createState()` will create the mutable state for this widget at
   //a given location in the tree.
   @override
@@ -24,34 +24,22 @@ class _FaqState extends State<Faq> {
   bool _firstSearch = true;
   String _query = "";
 
-  FaqManipulation _faqManipulation = FaqManipulation();
-
   List<String> _filterList;
   List<String> _nebulae = [];
   List<Doc> _listdocs = [];
 
   //pega as perguntas e armazena em uma lista de Strings.
-  getQuestions() {
-    for (var item in _listdocs) {
-      _nebulae.add(item.pergunta);
-      print(item.pergunta);
-    }
-    _nebulae.sort();
-  }
 
   //pega todos os documentos e armazena em uma lista de documentos.
-  getDocs() async {
-    _listdocs = await _faqManipulation.getAllDocs();
-    getQuestions();
-  }
 
   @override
   void initState() {
     super.initState();
 
     _nebulae = new List<String>();
-    _nebulae = widget._listquery;
-    _nebulae.sort();
+    _listdocs = widget._listdocs;
+
+    _listdocs.sort((a, b) => a.pergunta.compareTo(b.pergunta));
   }
 
   _FaqState() {
@@ -149,14 +137,19 @@ class _FaqState extends State<Faq> {
   Widget _createListView() {
     return new Flexible(
       child: new ListView.builder(
-          itemCount: _nebulae.length,
+          itemCount: _listdocs.length,
           itemBuilder: (BuildContext context, int index) {
-            return new Card(
-              color: Colors.white,
-              elevation: 5.0,
-              child: new Container(
-                margin: EdgeInsets.all(15.0),
-                child: new Text("${_nebulae[index]}"),
+            return GestureDetector(
+              onTap: () {
+                print("${_listdocs[index].id}");
+              },
+              child: new Card(
+                color: Colors.white,
+                elevation: 5.0,
+                child: new Container(
+                  margin: EdgeInsets.all(15.0),
+                  child: new Text("${_listdocs[index].pergunta}"),
+                ),
               ),
             );
           }),

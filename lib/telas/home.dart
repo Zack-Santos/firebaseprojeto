@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebaseflutter/faqmanipulation.dart';
 import 'package:firebaseflutter/telas/Faq.dart';
 import 'package:flutter/material.dart';
 
@@ -8,15 +8,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<String> _list = [];
-  Future getQuestions() async {
-    QuerySnapshot snapshot = await Firestore.instance
-        .collection("perguntasfrequentes")
-        .getDocuments();
+  List<Doc> _list = [];
+  FaqManipulation _faqManipulation = FaqManipulation();
 
-    for (var item in snapshot.documents) {
-      _list.add(item.data["query"]);
+  void getDocs() async {
+    _list = await _faqManipulation.getAllDocs();
+
+    for (var item in _list) {
+      print(item.pergunta);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getDocs();
   }
 
   @override
@@ -26,8 +32,7 @@ class _HomeState extends State<Home> {
       body: Center(
         child: RaisedButton(
           onPressed: () async {
-            await getQuestions();
-
+            getDocs();
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Faq(_list)));
           },
