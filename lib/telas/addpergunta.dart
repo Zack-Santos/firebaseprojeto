@@ -9,6 +9,7 @@ class AddPergunta extends StatefulWidget {
 class _AddPerguntaState extends State<AddPergunta> {
   TextEditingController perguntaController = TextEditingController();
   TextEditingController respostaController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   //Snackbar
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -24,6 +25,7 @@ class _AddPerguntaState extends State<AddPergunta> {
 
   ///Snackbar
 
+  String text = "";
   FaqManipulation faqManipulation = FaqManipulation();
 
   @override
@@ -64,22 +66,49 @@ class _AddPerguntaState extends State<AddPergunta> {
               elevation: 0,
               backgroundColor: Colors.transparent,
             ),
-            TextField(
-              controller: perguntaController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                     TextFormField(
+                controller: perguntaController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Campo não pode ser vazio';
+                  }
+                  return null;
+                },
               ),
-            ),
-            TextField(
-              controller: respostaController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
+            
+             TextFormField(
+                controller: respostaController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Campo não pode ser vazio';
+                  }
+                  return null;
+                },
               ),
+          
+                ],
+              )
+              
+           
+          
             ),
-            RaisedButton(
+
+          
+           RaisedButton(
               color: Colors.orange,
               onPressed: () async {
-                await faqManipulation.addQuestion(
+                if (_formKey.currentState.validate() == true){
+                     await faqManipulation.addQuestion(
                   query: perguntaController.text,
                   answer: respostaController.text,
                 );
@@ -90,6 +119,11 @@ class _AddPerguntaState extends State<AddPergunta> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 });
+                }else{
+                  return null;
+                }
+
+               
               },
               child: Text("adicionar"),
             )
