@@ -29,7 +29,7 @@ class _FaqState extends State<Faq> {
   bool _firstSearch = true;
   String _query = "";
 
-  List<String> _nebulae;
+  List<String> _nebulae; //pasar a lista aki
   List<String> _filterList;
 
   @override
@@ -50,7 +50,9 @@ class _FaqState extends State<Faq> {
       "Eagle",
       "Horse Head",
       "Elephant's Trunk",
-      "Butterfly"
+      "Butterfly",
+      "renan",
+      "renan"
     ];
     _nebulae.sort();
   }
