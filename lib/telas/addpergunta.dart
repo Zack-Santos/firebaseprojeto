@@ -1,4 +1,4 @@
-import 'package:firebaseflutter/functions.dart';
+import 'package:firebaseflutter/faqmanipulation.dart';
 import 'package:flutter/material.dart';
 
 class AddPergunta extends StatefulWidget {
@@ -10,8 +10,20 @@ class _AddPerguntaState extends State<AddPergunta> {
   TextEditingController perguntaController = TextEditingController();
   TextEditingController respostaController = TextEditingController();
 
+  List<Doc> listdoc = [];
+
+  FaqManipulation faqManipulation = FaqManipulation();
+
+  pegarDocs() async {
+    listdoc = await faqManipulation.getAllDocs();
+    for (var item in listdoc) {
+      print(item.id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    pegarDocs();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(),
@@ -33,8 +45,10 @@ class _AddPerguntaState extends State<AddPergunta> {
             ),
             RaisedButton(
               onPressed: () async {
-                await adicionar(
-                    respostaController.text, respostaController.text);
+                await faqManipulation.addQuestion(
+                  query: perguntaController.text,
+                  answer: respostaController.text,
+                );
               },
               child: Text("adicionar"),
             )
