@@ -43,6 +43,7 @@ class _FaqState extends State<Faq> {
       _nebulae.add(item.pergunta);
       print(item.pergunta);
     }
+    _nebulae.sort();
   }
 
   //pega todos os documentos e armazena em uma lista de documentos.
@@ -73,7 +74,7 @@ class _FaqState extends State<Faq> {
     //   "Elephant's Trunk",
     //   "Butterfly"
     // ];
-     _nebulae.sort();
+    // _nebulae.sort();
   }
 
   _FaqState() {
