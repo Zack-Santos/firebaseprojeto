@@ -6,7 +6,7 @@ class FaqEdit extends StatelessWidget {
     return MaterialApp(
       title: "ListView SearchView",
       home: new Faq(),
-      theme: ThemeData(primaryColor: Colors.orange),
+     // theme: ThemeData(primaryColor: Colors.orange),
     );
   }
 }
@@ -77,9 +77,7 @@ class _FaqState extends State<Faq> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text("SearchView ListView"),
-      ),
+    
       body: new Container(
         margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
         child: new Column(
@@ -92,19 +90,65 @@ class _FaqState extends State<Faq> {
     );
   }
  //Create a SearchView
-  Widget _createSearchView() {
-    return new Container(
-      decoration: BoxDecoration(border: Border.all(width: 1.0)),
-      child: new TextField(
-        controller: _searchview,
-        decoration: InputDecoration(
-          hintText: "Search",
-          hintStyle: new TextStyle(color: Colors.grey[300]),
-        ),
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
+   Widget _createSearchView({double top = 40}) => Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(left: 4, right: 4, top: top),
+              margin: EdgeInsets.only(bottom: 15),
+              child: Material(
+                elevation: 5,
+                child: TextField(
+                  controller: _searchview,
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                  cursorColor: Colors.green,
+                  decoration: InputDecoration(
+                    hintText: "Pesquisar pergunta",
+                   // hintStyle: MyTextStyles.textInformation,
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                    suffixIcon: Material(
+                      elevation: 0,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 4, right: 4, top: top),
+            margin: EdgeInsets.only(bottom: 15),
+            child: Material(
+              elevation: 5,
+              child: IconButton(
+                onPressed: () {
+               //   Navigator.push(context,
+                  //    MaterialPageRoute(builder: (context) => AddQuestion()));
+                },
+                icon: Icon(Icons.add),
+              ),
+            ),
+          ),
+        ],
+      );
+  // Widget _createSearchView() {
+  //   return new Container(
+  //     decoration: BoxDecoration(border: Border.all(width: 1.0)),
+  //     child: new TextField(
+  //       controller: _searchview,
+  //       decoration: InputDecoration(
+  //         hintText: "Digite sua dúvida",
+  //         hintStyle: new TextStyle(color: Colors.grey[300]),
+  //       ),
+  //       textAlign: TextAlign.center,
+  //     ),
+  //   );
+  // }
+
+
+
+  
   //Create a ListView widget
   Widget _createListView() {
     return new Flexible(
