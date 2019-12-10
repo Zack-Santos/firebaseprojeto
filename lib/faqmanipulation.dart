@@ -54,3 +54,9 @@ class Doc {
 
   Doc({this.id, this.pergunta, this.resposta});
 }
+
+class NovoDoc {
+  Map<dynamic, dynamic> mapa;
+
+  NovoDoc(this.mapa);
+}

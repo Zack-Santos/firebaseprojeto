@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebaseflutter/faqmanipulation.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,10 @@ class _FaqState extends State<Faq> {
 
   List<String> _filterList;
   List<String> _nebulae = [];
+  List<String> _perguntas = [];
   List<Doc> _listdocs = [];
+  List<NovoDoc> _listmap = [];
+  bool veryfi = true;
 
   //pega as perguntas e armazena em uma lista de Strings.
 
@@ -136,23 +140,44 @@ class _FaqState extends State<Faq> {
   //Create a ListView widget
   Widget _createListView() {
     return new Flexible(
-      child: new ListView.builder(
-          itemCount: _listdocs.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {
-                print("${_listdocs[index].id}");
-              },
-              child: new Card(
-                color: Colors.white,
-                elevation: 5.0,
-                child: new Container(
-                  margin: EdgeInsets.all(15.0),
-                  child: new Text("${_listdocs[index].pergunta}"),
-                ),
-              ),
-            );
-          }),
+      child: FutureBuilder(
+        future:
+            Firestore.instance.collection("perguntasfrequentes").getDocuments(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+
+            default:
+              if (veryfi) {
+                for (int i = 0; i < snapshot.data.documents.length; i++) {
+                  _nebulae.add(snapshot.data.documents[i].data["query"]);
+                  NovoDoc _novoDoc = NovoDoc(snapshot.data.documents[i].data);
+                  _listmap.add(_novoDoc);
+                }
+
+                _nebulae.sort();
+
+                veryfi = false;
+              }
+
+              return ListView.builder(
+                itemCount: _nebulae.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    onTap: () {
+                      print(_perguntas[index]);
+                    },
+                    title: Text(_nebulae[index]),
+                  );
+                },
+              );
+          }
+        },
+      ),
     );
   }
 
