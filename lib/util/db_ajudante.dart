@@ -14,6 +14,7 @@ class DBAjudante {
   final String colunaId = "id";
   final String afazeresNome = "nome";
   final String afazeresDataCriado = "data";
+  final String status = "status";
 
   static Database _db;
 
@@ -32,18 +33,22 @@ class DBAjudante {
   initDb() async {
     Directory documentoDirectorio = await getApplicationDocumentsDirectory();
     String path = join(documentoDirectorio.path, "afazeres_db.db");
+    print(">>>>>>path = $path");
     var nossaDb = await openDatabase(path, version: 1, onCreate: _onCreate);
     return nossaDb;
   }
 
   void _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $nomeTabela(id INTEGER PRIMARY KEY, $afazeresNome TEXT, $afazeresDataCriado TEXT)");
+        "CREATE TABLE $nomeTabela(id INTEGER PRIMARY KEY, $afazeresNome TEXT, $afazeresDataCriado TEXT, $status TEXT)");
   }
 
   Future<int> salvarAfazer(Afazer item) async {
     var dbCliente = await db;
+    print(">>>>>>item = ${item.toMap()}");
+
     int res = await dbCliente.insert("$nomeTabela", item.toMap());
+    print(">>>>>res = $res");
     return res;
   }
 
@@ -51,6 +56,10 @@ class DBAjudante {
     var dbCliente = await db;
     var res = await dbCliente
         .rawQuery("SELECT * FROM $nomeTabela ORDER BY $afazeresNome ASC");
+
+    for (var item in res) {
+      print("+++++++ = $item");
+    }
 
     return res.toList();
   }

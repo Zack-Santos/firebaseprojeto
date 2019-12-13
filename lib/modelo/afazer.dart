@@ -26,6 +26,9 @@ class Afazer extends StatelessWidget {
       mapa["id"] = _id;
     }
 
+    print(">>>>>>>mapa = $mapa");
+    print(">>>>>>>id = ${mapa["id"]}");
+
     return mapa;
   }
 
@@ -38,8 +41,9 @@ class Afazer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.red,
       margin: EdgeInsets.all(8),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
@@ -53,7 +57,7 @@ class Afazer extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: 5),
             child: Text(
-              "Criado em $_afazerDataCriado",
+              "$_afazerDataCriado",
               style: TextStyle(
                 color: Colors.white70,
                 fontSize: 12.5,
