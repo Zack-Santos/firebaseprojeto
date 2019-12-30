@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 
+import 'confimação.dart';
 
 // Future<void> main() async {
 //   // Obtain a list of the available cameras on the device.
@@ -25,7 +26,6 @@ import 'package:path_provider/path_provider.dart';
 //     ),
 //   );
 // }
-
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -50,14 +50,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
-      
       // Get a specific camera from the list of available cameras.
       widget.camera,
       // Define the resolution to use.
       ResolutionPreset.medium,
-      enableAudio:false,
-  
-  
+      enableAudio: false,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -73,7 +70,11 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async => false,
+        child:
+    
+    Scaffold(
       //appBar: AppBar(title: Text('Take a picture')),
       // Wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner
@@ -127,7 +128,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           }
         },
       ),
-    );
+    ));
   }
 }
 
@@ -147,62 +148,73 @@ class DisplayPictureScreen extends StatelessWidget {
       return firstCamera;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Frente do seu Documento'),
-        backgroundColor: Colors.transparent,
-        leading: Text(""),
-      ),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Column(
-        children: <Widget>[
-          Container(
-            color: Colors.white,
-            height: MediaQuery.of(context).size.height * 0.65,
-            alignment: Alignment.center,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.6,
-              width: MediaQuery.of(context).size.width * 0.8,
-              padding: const EdgeInsets.all(8.0),
-              color: Colors.black,
-              child: Image.file(
-                File(imagePath),
-                fit: BoxFit.fill,
-              ),
-            ),
+    return WillPopScope(
+        onWillPop: () async => false,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('Frente do seu Documento'),
+            backgroundColor: Colors.transparent,
+            leading: Text(""),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.20,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                ButtomB(
-                  title: "Tentar novamente",
-                  eventFunc: () async {
-                    // If the picture was taken, display it on a new screen.
-                    final camera = await getCamera();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TakePictureScreen(camera: camera),
-                      ),
-                    );
-                  },
+          // The image is stored as a file on the device. Use the `Image.file`
+          // constructor with the given path to display the image.
+          body: Column(
+            children: <Widget>[
+              Container(
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height * 0.65,
+                alignment: Alignment.center,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  padding: const EdgeInsets.all(8.0),
+                  color: Colors.black,
+                  child: Image.file(
+                    File(imagePath),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-                ButtomB(
-                  title: "Continuar",eventFunc: (){},
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.20,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    ButtomB(
+                      title: "Tentar novamente",
+                      eventFunc: () async {
+                        // If the picture was taken, display it on a new screen.
+                        final camera = await getCamera();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                TakePictureScreen(camera: camera),
+                          ),
+                        );
+                      },
+                    ),
+                    ButtomB(
+                      title: "Continuar",
+                      eventFunc: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Confirmar(),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 10,
-                )
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+              )
+            ],
+          ),
+        ));
   }
 }
