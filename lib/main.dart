@@ -1,36 +1,24 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: Teste(),
+    home: Tela(),
   ));
 }
 
-class Teste extends StatefulWidget {
+class Tela extends StatefulWidget {
   @override
-  _TesteState createState() => _TesteState();
+  _TelaState createState() => _TelaState();
 }
 
-class _TesteState extends State<Teste> {
+class _TelaState extends State<Tela> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      backgroundColor: Colors.white,
       body: Center(
         child: RaisedButton(
-          onPressed: () async {
-            try {
-              await Firestore.instance
-                  .collection("teste")
-                  .add({"teste": "teste25"}).catchError((e) {
-                print("+++++++$e");
-              });
-            } catch (e) {
-              print(">>>>>>${e.toString()}");
-            }
-          },
+          onPressed: () {},
           child: Text("ADD"),
         ),
       ),
