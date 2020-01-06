@@ -155,23 +155,27 @@ class DisplayPictureScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    SizedBox(height: 10,),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       'Frente do seu Documento',
                       style: TextStyle(color: Colors.black),
                     ),
                     Container(
-                      color: Colors.white,
-                      alignment: Alignment.center,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.6,
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        padding: const EdgeInsets.all(8.0),
-                        color: Colors.red,
-                        child: Image.file(
-                          File(imagePath),
-                          fit: BoxFit.fill,
-                        ),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.blue,
+                              width: 5.0,
+                              style: BorderStyle.solid),
+                          borderRadius: BorderRadius.circular(20.0)),
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      padding: const EdgeInsets.all(8.0),
+                    //  color: Colors.red,
+                      child: Image.file(
+                        File(imagePath),
+                        fit: BoxFit.fill,
                       ),
                     ),
                     Container(

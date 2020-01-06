@@ -18,7 +18,7 @@ class Foto extends StatelessWidget {
       color: Colors.white,
       child: Center(
         child: FlatButton(
-          color: Colors.yellow,
+          color: Colors.blue,
           child: Text("Tirar Foto"),
           onPressed: () async {
             final camera = await getCamera();

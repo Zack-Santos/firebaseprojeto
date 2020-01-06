@@ -1,9 +1,12 @@
-import 'package:firebaseflutter/camera/foto.dart';
+
 import 'package:flutter/material.dart';
+import 'Responsive/convert.dart';
+import 'Responsive/layout.dart';
+
 
 void main() {
   runApp(MaterialApp(
-    home: Foto(),
+    home: Convert(),
   ));
 }
 

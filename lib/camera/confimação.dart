@@ -5,11 +5,15 @@ class Confirmar extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async => false,
-        child:
-    
-    Container(
-      color: Colors.white,
-      child: Center(child: Text("Deu Certo!", style: TextStyle(color: Colors.black),)),
-    ));
+        child: Container(
+          color: Colors.blue,
+          child: Container(
+            child: Center(
+                child: Text(
+              "Thanks!",
+              style: TextStyle(color: Colors.white, fontSize: 40),
+            )),
+          ),
+        ));
   }
 }
